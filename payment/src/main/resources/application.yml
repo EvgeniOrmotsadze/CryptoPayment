@@ -1,0 +1,41 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  liquibase:
+    change-log: classpath:db.changelog/db.changelog-master.xml
+
+crypto:
+  api:
+    key: x0UpXWdpORzKZ7HV_mtUSg
+    secret: S0VMqRZg_HxecPtQAmo-HT8DWFBiGU5T2bD8R-wjd4E
+    url: https://business-sandbox.cryptopay.me
+  callback:
+    secret: _av_bUZ3pqoMh8QZmNxwapm19ZxocUSm2e4eUZVp6H0
+  allowed:
+    ip: 3.249.128.101
+
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+logging:
+  level:
+    root: INFO
+  file:
+    path: /var/log/app

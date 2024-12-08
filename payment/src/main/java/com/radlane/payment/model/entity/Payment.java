@@ -1,12 +1,13 @@
 package com.radlane.payment.model.entity;
 
+import com.radlane.payment.model.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-
+import java.time.LocalDateTime;
 @Entity
 @Data
 @NoArgsConstructor
@@ -16,11 +17,24 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "channel_id", nullable = false)
-    private com.radlane.payment.model.entity.CryptoChannel channel;
+    @Version  // Optimistic locking: Version field ensures no concurrent updates
+    private Long version;
 
-    private String transactionId;
-    private BigDecimal amount;
-    private String status; // PENDING, CONFIRMED, FAILED
+    @Column(unique = true, nullable = false)
+    private String paymentId;
+    private Long channelId;
+    private String customerId;
+    private String address;
+    private String network;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
+
+    private BigDecimal paidAmount;
+    private String paidCurrency;
+    private BigDecimal receivedAmount;
+    private String receivedCurrency;
+    private BigDecimal fee;
+    private String feeCurrency;
+    private String createdAt;
 }
