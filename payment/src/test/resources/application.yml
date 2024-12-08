@@ -7,8 +7,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
 
-# liquibase:
-#   enabled: false
+  liquibase:
+    change-log: classpath:db.changelog/db.changelog-master.xml
 
 crypto:
   api:

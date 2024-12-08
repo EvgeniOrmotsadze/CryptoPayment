@@ -1,5 +1,6 @@
 package com.radlane.payment.crypto;
 
+import com.radlane.payment.model.dto.ChannelPaymentResponse;
 import com.radlane.payment.model.dto.CreateChannelPaymentResponse;
 import com.radlane.payment.model.dto.CreateChannelPaymentRequest;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,10 @@ public class Channels {
 
     public CreateChannelPaymentResponse createChannel(CreateChannelPaymentRequest params) {
         return apiClient.post("/api/channels", params, CreateChannelPaymentResponse.class);
+    }
+
+    public ChannelPaymentResponse getChannelPayments(){
+        return null;
     }
 }
 

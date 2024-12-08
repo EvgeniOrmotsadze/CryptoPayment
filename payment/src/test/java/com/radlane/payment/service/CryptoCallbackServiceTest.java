@@ -35,7 +35,7 @@ public class CryptoCallbackServiceTest {
 
     // Inject mocks into the service
     @InjectMocks
-    private CryptoCallbackService cryptoCallbackService;
+    private CryptoCallbackServiceImpl cryptoCallbackService;
 
     private ChannelPaymentCallbackRequest.CallbackData callbackData;
     private Payment payment;
@@ -44,7 +44,7 @@ public class CryptoCallbackServiceTest {
     void setUp() {
         // Initialize mocks
         MockitoAnnotations.openMocks(this);
-        cryptoCallbackService = new CryptoCallbackService(callbackVerifier, objectMapper, paymentRepository);
+        cryptoCallbackService = new CryptoCallbackServiceImpl(callbackVerifier, objectMapper, paymentRepository);
 
         // Sample CallbackData to be used in tests
         callbackData = new ChannelPaymentCallbackRequest.CallbackData();

@@ -24,7 +24,7 @@ public class ChannelPaymentServiceTest {
     private Channels channels;
 
     @InjectMocks
-    private ChannelPaymentService channelPaymentService;
+    private ChannelPaymentServiceImpl channelPaymentService;
 
     private CreateChannelPaymentRequest request;
     private CreateChannelPaymentResponse externalResponse;
