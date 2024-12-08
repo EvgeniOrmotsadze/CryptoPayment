@@ -27,7 +27,7 @@ public class CallbackVerifier {
         }
     }
 
-    private String generateSignature(String body) throws Exception {
+    public String generateSignature(String body) throws Exception {
         SecretKeySpec secretKey = new SecretKeySpec(cryptoConfig.getCallback().getSecret().getBytes(StandardCharsets.UTF_8), "HmacSHA256");
         Mac mac = Mac.getInstance("HmacSHA256");
         mac.init(secretKey);

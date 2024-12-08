@@ -27,7 +27,7 @@ dependencies {
 
 	// Database
 	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'org.postgresql:postgresql' // Production, if using PostgreSQL
+	runtimeOnly 'org.postgresql:postgresql'
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
@@ -36,6 +36,9 @@ dependencies {
 	// Test dependencies
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mockito:mockito-core'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	testImplementation 'com.h2database:h2'
 }
 
 tasks.named('test') {

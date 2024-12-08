@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+# liquibase:
+#   enabled: false
+
+crypto:
+  api:
+    key: x0UpXWdpORzKZ7HV_mtUSg
+    secret: S0VMqRZg_HxecPtQAmo-HT8DWFBiGU5T2bD8R-wjd4E
+    url: https://business-sandbox.cryptopay.me
+  callback:
+    secret: _av_bUZ3pqoMh8QZmNxwapm19ZxocUSm2e4eUZVp6H0
+  allowed:
+    ip: 3.249.128.101
