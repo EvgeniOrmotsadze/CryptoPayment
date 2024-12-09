@@ -18,6 +18,7 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
             </column>
             <column name="address" type="VARCHAR(255)"/>
             <column name="version" type="BIGINT"/>
+            <column name="channel_id" type="BIGINT"/>
             <column name="network" type="VARCHAR(50)"/>
             <column name="status" type="VARCHAR(50)"/>
             <column name="paid_amount" type="DECIMAL(19, 4)"/>

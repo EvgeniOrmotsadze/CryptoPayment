@@ -22,6 +22,7 @@ public class Payment {
 
     @Column(unique = true, nullable = false)
     private String paymentId;
+    @Column(name = "channel_id")
     private Long channelId;
     private String customerId;
     private String address;

@@ -42,7 +42,7 @@ public class CryptoCallbackServiceImpl implements CryptoCallbackService {
             ChannelPaymentCallbackRequest.CallbackData data = channelPaymentCallbackRequest.getData();
 
             String paymentId = data.getId();
-            String status = data.getStatus();
+            PaymentStatus status = PaymentStatus.fromString(data.getStatus());
             String statusContext = data.getStatusContext();
 
             // Check if the payment already exists in the database or create a new payment if not found
@@ -59,11 +59,11 @@ public class CryptoCallbackServiceImpl implements CryptoCallbackService {
 
             // Business Logic for Different Statuses
             switch (status) {
-                case "pending" -> handlePending(payment);
-                case "completed" -> handleCompleted(payment, data);
-                case "on_hold" -> handleOnHold(payment, statusContext);
-                case "refunded" -> handleRefunded(payment);
-                case "cancelled" -> handleCancelled(payment);
+                case PENDING -> handlePending(payment);
+                case COMPLETED -> handleCompleted(payment, data);
+                case ON_HOLD -> handleOnHold(payment, statusContext);
+                case REFUNDED -> handleRefunded(payment);
+                case CANCELLED -> handleCancelled(payment);
                 default -> log.warn("Unhandled status: {}", status);
             }
 
