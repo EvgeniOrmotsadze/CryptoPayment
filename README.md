@@ -20,16 +20,42 @@ First, ensure Docker is running on your machine.
 In the project directory, there is a `docker-compose.yml` file that sets up PostgreSQL. To start the PostgreSQL database, use the following command:
 
 ```bash 
-docker-compose up
+docker-compose up -d postgres
 ```
 
 This command pulls the necessary Docker image for PostgreSQL and starts the container. The PostgreSQL instance will be configured using the settings in the docker-compose.yml file.
+
+## Build and Start the Java Application using Docker Compose
+Once PostgreSQL is up and running, start the Java application (Spring Boot) within Docker using Docker Compose.
+
+```bash
+docker-compose up -d
+``` 
+This command will build the Docker images (if not built already) and start the services as defined in the docker-compose.yml file. The Java application will be available on port 8081
+
+## Build and Run the Spring Boot Application (Locally)
+
+If you want to build and run the Spring Boot application manually (outside of Docker), follow these steps:
+
+
+```bash 
+./gradlew clean build
+```
+
+Run tests:
+```bash 
+./gradlew test
+```
+
+Start the application:
+```bash 
+./gradlew bootRun
+```
 
 
 ## Configure the Application
 The application configuration can be found in:
 ```bash 
-
 src/main/resources/application.yml
 ```
 
@@ -61,26 +87,6 @@ Password: postgres
 API Key and Secret for secure communication
 Callback IP whitelisting
 Ensure that these configurations are correct before proceeding.
-
-
-
-## 3. Build and Run the Spring Boot Application
-Build the project:
-
-
-```bash 
-./gradlew clean build
-```
-
-Run tests:
-```bash 
-./gradlew test
-```
-
-Start the application:
-```bash 
-./gradlew bootRun
-```
 
 
 ## 4. Access the API Documentation (Swagger)
