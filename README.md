@@ -117,3 +117,6 @@ Get Channel Payments
 ```bash 
 Endpoint: GET /api/channels/{channel-id}/payments/{channel-payment-id}
 ```
+
+## Test Coverage 
+![img.png](img.png)
