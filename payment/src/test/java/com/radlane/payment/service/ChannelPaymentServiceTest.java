@@ -1,6 +1,7 @@
 package com.radlane.payment.service;
 
 import com.radlane.payment.crypto.Channels;
+import com.radlane.payment.exception.CustomPaymentException;
 import com.radlane.payment.model.dto.ChannelPaymentResponse;
 import com.radlane.payment.model.dto.CreateChannelPaymentRequest;
 import com.radlane.payment.model.dto.CreateChannelPaymentResponse;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -81,13 +83,15 @@ public class ChannelPaymentServiceTest {
     @Test
     void testCreateChannelPayment_Exception() {
         // Arrange
-        when(channels.createChannel(request)).thenThrow(new RuntimeException("API error"));
+        when(channels.createChannel(request)).thenThrow(new CustomPaymentException("API error", HttpStatus.INTERNAL_SERVER_ERROR));
 
         // Act
-        ChannelPaymentResponse response = channelPaymentService.createChannelPayment(request);
+        CustomPaymentException exception = assertThrows(CustomPaymentException.class, () -> {
+            channelPaymentService.createChannelPayment(request);
+        });
 
-        // Assert
-        assertEquals("Error: API error", response.getErrorMessage());
+        // Validate the exception message
+        assertEquals("Error: API error", exception.getMessage());
     }
 }
 

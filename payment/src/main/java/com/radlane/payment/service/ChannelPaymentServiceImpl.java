@@ -1,6 +1,7 @@
 package com.radlane.payment.service;
 
 import com.radlane.payment.crypto.Channels;
+import com.radlane.payment.exception.CustomPaymentException;
 import com.radlane.payment.model.dto.CreateChannelPaymentResponse;
 import com.radlane.payment.model.dto.CreateChannelPaymentRequest;
 import com.radlane.payment.model.dto.ChannelPaymentResponse;
@@ -8,6 +9,8 @@ import com.radlane.payment.model.entity.CryptoChannel;
 import com.radlane.payment.repository.ChannelRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -43,7 +46,7 @@ public class ChannelPaymentServiceImpl implements ChannelPaymentService {
                 return new ChannelPaymentResponse("Error: Null response from external API");
             }
         } catch (Exception e) {
-            return new ChannelPaymentResponse("Error: " + e.getMessage());
+            throw new CustomPaymentException("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

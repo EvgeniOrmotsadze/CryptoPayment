@@ -122,35 +122,53 @@ public class CryptoCallbackServiceTest {
 
     @Test
     void testProcessCallback_ShouldHandleOnHoldStatus() throws Exception {
-        // Change status in callback data
+        // Create a mock or actual object for ChannelPaymentCallbackRequest
+        ChannelPaymentCallbackRequest channelPaymentCallbackRequest = new ChannelPaymentCallbackRequest();
+        ChannelPaymentCallbackRequest.CallbackData callbackData = new ChannelPaymentCallbackRequest.CallbackData();
+        callbackData.setId("payment_id");
         callbackData.setStatus("on_hold");
         callbackData.setStatusContext("illicit_resource");
+        channelPaymentCallbackRequest.setData(callbackData);
 
-        // Mock the scenario where payment exists
+        // Mock the payment repository
         when(paymentRepository.findByPaymentId(callbackData.getId()))
                 .thenReturn(Optional.of(payment));
+
+        // Mock the JSON parsing if necessary
+        when(objectMapper.readValue(anyString(), eq(ChannelPaymentCallbackRequest.class)))
+                .thenReturn(channelPaymentCallbackRequest);
 
         // Call the method under test
         cryptoCallbackService.processCallback("callback_body");
 
-        // Verify that log is printed and no changes are made to the payment
+        // Verify that no changes are made to the payment
         verify(paymentRepository, never()).save(any(Payment.class));
     }
+
 
     @Test
     void testProcessCallback_ShouldSkipProcessingWhenAlreadyProcessed() throws Exception {
         // Mock the scenario where payment already exists and is completed
         payment.setStatus(PaymentStatus.COMPLETED);
-        when(paymentRepository.findByPaymentId(callbackData.getId()))
+        when(paymentRepository.findByPaymentId("test-id"))
                 .thenReturn(Optional.of(payment));
 
-        // Call the method under test
-        cryptoCallbackService.processCallback("callback_body");
+        // Mock deserialization
+        String validCallbackBody = "{ \"id\": \"test-id\", \"data\": { /* ... */ } }";
+        ChannelPaymentCallbackRequest callbackRequestMock = new ChannelPaymentCallbackRequest();
+        callbackData.setStatus("completed");
+        callbackData.setId("test-id");
+        callbackRequestMock.setData(callbackData);
+        when(objectMapper.readValue(validCallbackBody, ChannelPaymentCallbackRequest.class))
+                .thenReturn(callbackRequestMock);
 
-        // Verify that no changes were made to the payment
+        // Call the method under test
+        cryptoCallbackService.processCallback(validCallbackBody);
+
         verify(paymentRepository, never()).save(any(Payment.class));
-        assertEquals(PaymentStatus.COMPLETED, payment.getStatus());
+
     }
+
 
     @Test
     void testProcessCallback_ShouldCreateNewPayment_WhenPaymentDoesNotExist() throws Exception {

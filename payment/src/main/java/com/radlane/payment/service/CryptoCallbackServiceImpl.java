@@ -2,11 +2,13 @@ package com.radlane.payment.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.radlane.payment.crypto.util.CallbackVerifier;
+import com.radlane.payment.exception.CustomPaymentException;
 import com.radlane.payment.model.PaymentStatus;
 import com.radlane.payment.model.dto.ChannelPaymentCallbackRequest;
 import com.radlane.payment.model.entity.Payment;
 import com.radlane.payment.repository.PaymentRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,6 +71,7 @@ public class CryptoCallbackServiceImpl implements CryptoCallbackService {
 
         } catch (Exception e) {
             log.error("Error processing callback", e);
+            throw new CustomPaymentException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
